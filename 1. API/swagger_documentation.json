@@ -1,0 +1,361 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Soundless.AudioClassification.Api",
+    "description": "This is an API that enables users to upload their own audio clips to train [YAMNet](https://tfhub.dev/google/yamnet/1) convolutional neural network. It processes the uploaded audios and transform them into the required format to train the network. It has also the ability to capture audio events and ignore silence clips of large files so only clips with meaningful information are generated to the training process. The user is enabled to upload small audio clips without modifications and finally the user can run on demand the training process and get the TensorFlow lite model to use it within an Android mobile app. \n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "paths": {
+    "/upload": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Upload large files with their labels to convert them into 1 channel and 16KHz and generate audio clips",
+        "description": "Upload large files to traing the model",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "Audio file to be uploaded",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "file"
+            }
+          },
+          {
+            "name": "labels",
+            "in": "formData",
+            "description": "Labels of above files uploaded with the same order separated by comma",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "silence_threshold",
+            "in": "formData",
+            "description": "Sound threshold to discard silence clips",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minimun_silence_duration",
+            "in": "formData",
+            "description": "Minimun duration of silence audios to be discarded",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minimun_clip_duration",
+            "in": "formData",
+            "description": "Minimun duration of audios to be included",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/uploadSingle": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Upload small audio clips to convert them into 1 channel and 16KHz",
+        "description": "Upload audios from mobile app",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "Audio file to be uploaded",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "file"
+            }
+          },
+          {
+            "name": "labels",
+            "in": "formData",
+            "description": "Labels of above files uploaded with the same order separated by comma",
+            "required": true,
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/process": {
+      "post": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Traing model with audio clips uploaded and generated.",
+        "description": "Take audio clips generated and organize train and test data to train the model, finally export TensorFlow model and serving model",
+        "parameters": null,
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/download": {
+      "get": {
+        "tags": [
+          "default"
+        ],
+        "summary": "Traing model with audio clips uploaded and generated.",
+        "description": "Take audio clips generated and organize train and test data to train the model, finally export TensorFlow model and serving model",
+        "parameters": null,
+        "responses": {
+          "200": {
+            "description": "Files uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "required": [
+          "name",
+          "photoUrls"
+        ],
+        "type": "object",
+        "properties": {
+          "log": {
+            "type": "array",
+            "format": "binary",
+            "example": [
+              "Starting process",
+              "Temporary files created",
+              "Process finished"
+            ],
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "message": {
+            "type": "integer",
+            "format": "int64",
+            "example": "Process executed successfully"
+          },
+          "data": {
+            "type": "object",
+            "example": {}
+          }
+        },
+        "xml": {
+          "name": "pet"
+        }
+      },
+      "ApiResponseError": {
+        "required": [
+          "name",
+          "photoUrls"
+        ],
+        "type": "object",
+        "properties": {
+          "log": {
+            "type": "array",
+            "format": "binary",
+            "example": [
+              "Starting process",
+              "Labels misformed",
+              "Process finished"
+            ],
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int64",
+            "example": 422
+          },
+          "message": {
+            "type": "integer",
+            "format": "int64",
+            "example": "Num of labels do not match with num of files"
+          },
+          "data": {
+            "type": "object",
+            "example": {}
+          }
+        },
+        "xml": {
+          "name": "pet"
+        }
+      }
+    },
+    "requestBodies": {
+      "Pet": {
+        "description": "Pet object that needs to be added to the store",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        }
+      },
+      "UserArray": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}

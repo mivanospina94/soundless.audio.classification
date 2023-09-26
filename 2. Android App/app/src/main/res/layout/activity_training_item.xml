@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="15dp"
+    android:divider="#CCCCCC"
+    android:dividerHeight="1dp"
+    android:showDividers="end" >
+
+    <LinearLayout
+        android:id="@+id/layoutItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvIndex"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/tvAudioStatus"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.80"
+            android:gravity="center"
+            android:text="Stopped." />
+
+        <ImageButton
+            android:id="@+id/btnRemove"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="0.15"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="Remove"
+            android:scaleType="fitCenter"
+            android:src="@drawable/delete_forever" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutItemRecord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <ImageButton
+            android:id="@+id/btnRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="Record"
+            android:scaleType="fitCenter"
+            android:src="@drawable/radio_button_checked" />
+
+        <ImageButton
+            android:id="@+id/btnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="Record"
+            android:scaleType="fitCenter"
+            android:src="@drawable/play_circle"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvPath"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.70"
+            android:gravity="center_vertical" />
+
+        <LinearLayout
+            android:id="@+id/layoutItemStopPause"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnPause"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:alpha="0.5"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="Record"
+                android:scaleType="fitCenter"
+                android:enabled="false"
+                android:clickable="false"
+                android:visibility="gone"
+                android:src="@drawable/pause" />
+
+            <ImageButton
+                android:id="@+id/btnStop"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:alpha="0.5"
+                android:enabled="false"
+                android:clickable="false"
+                android:visibility="gone"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="Record"
+                android:scaleType="fitCenter"
+                android:src="@drawable/stop" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutItemFooter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvLabelTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:gravity="left"
+            android:text="Label:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLabelDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text=""
+            tools:visibility="gone" />
+
+        <EditText
+            android:id="@+id/etLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </LinearLayout>
+</LinearLayout>
